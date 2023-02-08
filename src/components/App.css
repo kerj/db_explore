@@ -1,0 +1,12 @@
+.tableContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1em 0em;
+}
+
+.table, .th, .td {
+  text-align: center;
+  border: 1px solid;
+  padding: 3px;
+}
