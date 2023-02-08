@@ -23,3 +23,5 @@ app.listen(port, () => (console.log(`app running on port ${port}`)));
 
 
 app.get('/customers', db.getCustomers)
+app.post('/addcustomer', db.addCustomer)
+app.post('/removecustomer', db.removeCustomer)
