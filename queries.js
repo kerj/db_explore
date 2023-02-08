@@ -18,11 +18,40 @@ const doSQL = async (sql, res) => {
   return res.status(200).json(result.rows);
 };
 
-const getCustomers = (_req, res) => {
-  const query = `SELECT * FROM customers ORDER BY last_name DESC LIMIT 2`;
+const getCustomers = async (_req, res) => {
+  const query = `SELECT * FROM customers WHERE first_name LIKE 'Le%'`;
+  return doSQL(query, res);
+};
+
+const addCustomer = async (req, res) => {
+  const { customerId, email, first_name, last_name } = req.body;
+
+  const query = `
+    INSERT INTO customers (customer_id, email_address, first_name, last_name)
+    VALUES (
+      '${customerId}',
+      '${email}',
+      '${first_name}',
+      '${last_name}'
+    )
+  `;
+
+  return doSQL(query, res);
+};
+
+const removeCustomer = async (req, res) => {
+  const { customerId } = req.body;
+
+  const query = `
+    DELETE FROM customers
+    WHERE customer_id = '${customerId}'
+    `;
+
   return doSQL(query, res);
 };
 
 module.exports = {
   getCustomers,
+  addCustomer,
+  removeCustomer,
 };
