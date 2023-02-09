@@ -1,7 +1,21 @@
 import React from "react";
-// import "./App.css";
 
 import { CallbackButton } from "./CallbackButton";
+
+const styles = {
+  tableContainer: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: "1em 0em",
+  },
+
+  tableValues: {
+    textAlign: "center",
+    border: "1px solid",
+    padding: "3px",
+  },
+};
 
 const useGetData = (url) => {
   const [data, setData] = React.useState(null);
@@ -63,11 +77,11 @@ export const App = () => {
     <>
       <CallbackButton callback={onAdd} text="Add test Customer" />
       <CallbackButton callback={onRemove} text="remove test Customer" />
-      <div className="tableContainer" style={{ color: "black" }}>
+      <div style={{ ...styles.tableContainer }}>
         {
-          <table className="table">
+          <table>
             <thead>
-              <tr className="tr">
+              <tr style={{ ...styles.tableValues }}>
                 {headers.map((header) => (
                   <th>{header}</th>
                 ))}
@@ -77,7 +91,7 @@ export const App = () => {
               {(results || []).map((row, index) => (
                 <tr key={index}>
                   {headers.map((header, ind) => (
-                    <td key={ind} className="td">
+                    <td key={ind} style={{ ...styles.tableValues }}>
                       {row[header]}
                     </td>
                   ))}
