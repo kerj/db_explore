@@ -15,7 +15,12 @@ pool.on("connect", () => {
 
 const doSQL = async (sql, res) => {
   const result = await pool.query(sql);
-  return res.status(200).json(result.rows);
+  // for example just return the results from this query 
+  const getNewCustomers = await pool.query(
+    `SELECT * FROM customers WHERE first_name LIKE 'Le%'`
+  );
+
+  return res.status(200).json(getNewCustomers.rows);
 };
 
 const getCustomers = async (_req, res) => {
@@ -39,6 +44,14 @@ const addCustomer = async (req, res) => {
   return doSQL(query, res);
 };
 
+const getTable = async (req, res) => {
+  const { name } = req.params;
+  const sql = `SELECT * FROM ${name} LIMIT 10`;
+  return await pool
+    .query(sql)
+    .then((result) => res.status(200).json(result.rows));
+};
+
 const removeCustomer = async (req, res) => {
   const { customerId } = req.body;
 
@@ -54,4 +67,5 @@ module.exports = {
   getCustomers,
   addCustomer,
   removeCustomer,
+  getTable,
 };
